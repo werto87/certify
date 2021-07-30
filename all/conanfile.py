@@ -3,11 +3,11 @@ from conans.tools import check_min_cppstd
 import os
 
 
-class ConfuJson(ConanFile):
-    name = "confu_json"
-    homepage = "https://github.com/werto87/confu_json"
-    description = "uses boost::fusion to help with serialization; json <-> user defined type"
-    topics = ("json parse", "serialization", "user defined type")
+class Certify(ConanFile):
+    name = "certify"
+    homepage = "https://github.com/djarek/certify"
+    description = "Boost.ASIO-based TLS certificate verification library"
+    topics = ("certificate verification")
     license = "BSL-1.0"
     url = "https://github.com/conan-io/conan-center-index"
     settings = "compiler"
