@@ -4,6 +4,7 @@ import os
 
 
 class Certify(ConanFile):
+    version = "0.0.1"
     name = "certify"
     homepage = "https://github.com/djarek/certify"
     description = "Boost.ASIO-based TLS certificate verification library"
@@ -12,10 +13,12 @@ class Certify(ConanFile):
     url = "https://github.com/conan-io/conan-center-index"
     settings = "compiler"
     no_copy_source = True
-
-    @property
-    def _source_subfolder(self):
-        return "source_subfolder"
+    scm = {
+        "type": "git",
+        "subfolder": "certify_src",
+        "url": "https://github.com/djarek/certify.git",
+        "revision": "master"
+    }
 
     def configure(self):
         if self.settings.compiler.cppstd:
@@ -24,16 +27,14 @@ class Certify(ConanFile):
 
     def requirements(self):
         self.requires("boost/1.76.0")
-
-    def source(self):
-        tools.get(**self.conan_data["sources"][self.version])
-        extracted_dir = self.name + "-" + self.version
-        os.rename(extracted_dir, self._source_subfolder)
+        self.requires("openssl/1.1.1k")
 
     def package(self):
         # This should lead to an Include path like #include "include_folder/IncludeFile.hxx"
-        self.copy("*.h*", dst="include/confu_json",
-                  src="source_subfolder/confu_json")
+        self.copy("*.h*", dst="include/boost/certify/",
+                  src="certify_src/include/boost/certify/")
+        self.copy("*.i*", dst="include/boost/certify/",
+                  src="certify_src/include/boost/certify/")
 
     def package_id(self):
         self.info.header_only()
